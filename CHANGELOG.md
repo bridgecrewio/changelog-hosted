@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## [1.0.6](https://github.com/bridgecrewio/changelog-hosted/releases/tag/1.0.6) - 2022-08-23 21:45:47
+
+minor improvements and fixes
+
+### Breaking Change
+
+- general:
+  - remove argo ([4f25181](https://github.com/bridgecrewio/changelog-hosted/commit/4f2518187edbb5c751ffa3e50b01c88ba32bc34a))
+
 ## [1.0.5](https://github.com/bridgecrewio/changelog-hosted/releases/tag/1.0.5) - 2022-08-23 08:26:28
 
 minor improvements and fixes

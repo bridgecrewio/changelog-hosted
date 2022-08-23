@@ -1,5 +1,21 @@
 # CHANGELOG
 
+## [1.0.5](https://github.com/bridgecrewio/changelog-hosted/releases/tag/1.0.5) - 2022-08-23 08:26:28
+
+minor improvements and fixes
+
+### Feature
+
+- general:
+  - add cloudormation ([d7466a7](https://github.com/bridgecrewio/changelog-hosted/commit/d7466a7deb605ad6c28579dfb54c1edc24c98dcf))
+  - add argo ([bd58ce3](https://github.com/bridgecrewio/changelog-hosted/commit/bd58ce3a44cfcca1f746617d243d386a883d96b7))
+  - add argo ([6b0163b](https://github.com/bridgecrewio/changelog-hosted/commit/6b0163b4e18a21f1861e60cfa4794c25d5af9d58))
+
+### Bug Fix
+
+- general:
+  - adjust cloudformation ([7fefdef](https://github.com/bridgecrewio/changelog-hosted/commit/7fefdef56ca4f34b1e5c0191111fbdb49c74b698))
+
 ## [1.0.1](https://github.com/bridgecrewio/changelog-hosted/releases/tag/1.0.1) - 2022-08-22 20:40:35
 
 minor improvements and fixes

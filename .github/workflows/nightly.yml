@@ -23,7 +23,7 @@ jobs:
           # grab latest release and tag to compare and decide to create a new one
           create_release=true
           release_notes="minor improvements and fixes"
-          latest_gh_release=$(curl -s https://api.github.com/repos/bridgecrewio/checkov/releases/latest  | grep -Po '"tag_name": "\K.*?(?=")')
+          latest_gh_release=$(curl -s "https://api.github.com/repos/${{ github.repository }}/releases/latest"  | grep -Po '"tag_name": "\K.*?(?=")')
           latest_tag=$(git describe --abbrev=0 --tags)
           
           if [ "$latest_gh_release" = "$latest_tag" ]

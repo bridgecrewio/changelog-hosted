@@ -3,3 +3,4 @@ cloudformation
 github
 gitlab
 argo
+circleci

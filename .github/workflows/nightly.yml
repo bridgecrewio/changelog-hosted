@@ -40,7 +40,7 @@ jobs:
         uses: mikepenz/release-changelog-builder-action@000e44613cdb6c340ac98cb1582f99e8d3230058  # v3
         env:
           GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
-          configuration: ".github/release-changelog-config.json"
+          configuration: "release-changelog-config.json"
           fromTag: ${{ steps.prepare_release.outputs.latest_release_version }}
           toTag: ${{ steps.prepare_release.outputs.version }}
       - name: Create GitHub Release

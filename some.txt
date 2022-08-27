@@ -1,6 +1,5 @@
 terraform
 cloudformation
 github
-gitlab
 argo
 circleci

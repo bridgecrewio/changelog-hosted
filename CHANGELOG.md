@@ -1,12 +1,12 @@
 # CHANGELOG
 
+## [Unreleased](https://github.com/bridgecrewio/changelog-hosted/compare/1.0.12...HEAD)
+
 ## 1.0.12 - 2022-08-27
 
 ### Bug Fix
 
 - **general:** remove gitlab - #3
-
-## Unreleased
 
 ## 1.0.9 - 2022-08-27
 

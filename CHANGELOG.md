@@ -1,6 +1,12 @@
 # CHANGELOG
 
-## [Unreleased](https://github.com/bridgecrewio/changelog-hosted/compare/1.0.13...HEAD)
+## [Unreleased](https://github.com/bridgecrewio/changelog-hosted/compare/1.0.14...HEAD)
+
+## [1.0.14](https://github.com/bridgecrewio/changelog-hosted/compare/1.0.13...1.0.14) - 2022-09-07
+
+### Feature
+
+- **general:** add bitbucket - [#5](https://github.com/bridgecrewio/changelog-hosted/pull/5)
 
 ## [1.0.13](https://github.com/bridgecrewio/changelog-hosted/compare/1.0.12...1.0.13) - 2022-09-05
 
@@ -29,6 +35,7 @@ minor improvements and fixes
 - 
 - 
 - 
+- 
 
 ## [1.0.5](https://github.com/bridgecrewio/changelog-hosted/releases/tag/1.0.5) - 2022-08-23 08:26:28
 
@@ -40,10 +47,13 @@ minor improvements and fixes
 - - add cloudormation ([d7466a7](https://github.com/bridgecrewio/changelog-hosted/commit/d7466a7deb605ad6c28579dfb54c1edc24c98dcf))
 - 
 - 
+- 
 - - add argo ([bd58ce3](https://github.com/bridgecrewio/changelog-hosted/commit/bd58ce3a44cfcca1f746617d243d386a883d96b7))
 - 
 - 
+- 
 - - add argo ([6b0163b](https://github.com/bridgecrewio/changelog-hosted/commit/6b0163b4e18a21f1861e60cfa4794c25d5af9d58))
+- 
 - 
 - 
 - 
@@ -52,6 +62,7 @@ minor improvements and fixes
 
 - general:
 - - adjust cloudformation ([7fefdef](https://github.com/bridgecrewio/changelog-hosted/commit/7fefdef56ca4f34b1e5c0191111fbdb49c74b698))
+- 
 - 
 - 
 - 
@@ -65,6 +76,7 @@ minor improvements and fixes
 - general:
 - 
 - - add terraform ([6245dcd](https://github.com/bridgecrewio/changelog-hosted/commit/6245dcd5ad77d20021296696519a1d21aeec2844))
+- 
 - 
 - 
 - 

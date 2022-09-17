@@ -1,0 +1,41 @@
+name: Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: version of hcl2
+        required: true
+
+permissions: read-all
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout checkov
+        uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b  # v3
+        with:
+          token: ${{ secrets.PAT_TOKEN }}
+          repository: bridgecrewio/checkov
+      - uses: actions/setup-python@b55428b1882923874294fa556849718a1d7f2ca5  # v4
+        with:
+          python-version: "3.7"
+      - name: Prepare PR
+        run: |
+          # install needed tools
+          pip install pipenv "pipenv-setup[black]"
+          
+          # update Pipfile
+          pipenv install bc-python-hcl2==${{ github.event.inputs.version }} --selective-upgrade
+          
+          # update setup.py
+          pipenv-setup sync --pipfile
+      - name: Create PR
+        uses: peter-evans/create-pull-request@18f90432bedd2afd6a825469ffd38aa24712a91d  # v4
+        with:
+          token: ${{ secrets.PAT_TOKEN }}
+          branch: update-hcl2-dep
+          commit-message: update python-hcl2 version
+          delete-branch: true
+          title: "chore: update python-hcl2 version"

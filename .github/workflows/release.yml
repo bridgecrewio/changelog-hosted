@@ -36,6 +36,10 @@ jobs:
         with:
           token: ${{ secrets.PAT_TOKEN }}
           branch: update-hcl2-dep
-          commit-message: update python-hcl2 version
           delete-branch: true
-          title: "chore: update python-hcl2 version"
+          commit-message: update python-hcl2 version
+          title: "chore: update bc-python-hcl2 version to ${{ github.event.inputs.version }}"
+          body: |
+            - Automatic update of bc-python-hcl2
+            
+            powered by [create-pull-request](https://github.com/peter-evans/create-pull-request) GHA

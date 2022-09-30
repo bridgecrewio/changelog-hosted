@@ -27,6 +27,7 @@ jobs:
           python -m pip install --no-cache-dir --upgrade pipenv "pipenv-setup[black]"
           
           # update Pipfile
+          pipenv --python 3.8
           pipenv install bc-python-hcl2==${{ github.event.inputs.version }} --selective-upgrade
           
           # update setup.py

@@ -20,26 +20,26 @@ jobs:
           repository: bridgecrewio/checkov
       - uses: actions/setup-python@b55428b1882923874294fa556849718a1d7f2ca5  # v4
         with:
-          python-version: "3.7"
+          python-version: "3.8"
       - name: Prepare PR
         run: |
           # install needed tools
-          pip install pipenv "pipenv-setup[black]"
+          python -m pip install --no-cache-dir --upgrade pipenv "pipenv-setup[black]"
           
           # update Pipfile
           pipenv install bc-python-hcl2==${{ github.event.inputs.version }} --selective-upgrade
           
           # update setup.py
           pipenv-setup sync --pipfile
-      - name: Create PR
-        uses: peter-evans/create-pull-request@18f90432bedd2afd6a825469ffd38aa24712a91d  # v4
-        with:
-          token: ${{ secrets.PAT_TOKEN }}
-          branch: update-hcl2-dep
-          delete-branch: true
-          commit-message: update python-hcl2 version
-          title: "chore: update bc-python-hcl2 version to ${{ github.event.inputs.version }}"
-          body: |
-            - Automatic update of bc-python-hcl2
-            
-            powered by [create-pull-request](https://github.com/peter-evans/create-pull-request) GHA
+#      - name: Create PR
+#        uses: peter-evans/create-pull-request@18f90432bedd2afd6a825469ffd38aa24712a91d  # v4
+#        with:
+#          token: ${{ secrets.PAT_TOKEN }}
+#          branch: update-hcl2-dep
+#          delete-branch: true
+#          commit-message: update python-hcl2 version
+#          title: "chore: update bc-python-hcl2 version to ${{ github.event.inputs.version }}"
+#          body: |
+#            - Automatic update of bc-python-hcl2
+#
+#            powered by [create-pull-request](https://github.com/peter-evans/create-pull-request) GHA

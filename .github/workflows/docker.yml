@@ -15,7 +15,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-
+      - uses: sigstore/cosign-installer@9becc617647dfa20ae7b1151972e9b3a2c338a2b  # v2
       - name: Install xmllint
         run: |
           sudo apt-get install -y libxml2-utils
@@ -35,10 +35,9 @@ jobs:
           push: true
           tags: ${{ env.IMAGE_NAME }}:latest
 
-      - uses: sigstore/cosign-installer@9becc617647dfa20ae7b1151972e9b3a2c338a2b  # v2
-
       - name: Generate SBOM
         id: checkov
+        continue-on-error: true
         uses: bridgecrewio/checkov-action@master
         with:
           api-key: ${{ secrets.BC_API_KEY }}

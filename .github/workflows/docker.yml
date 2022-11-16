@@ -72,9 +72,15 @@ jobs:
           xmllint --format raw.xml > cyclonedx.xml
           
           # attest SBOM
-          cosign attest --key env://COSIGN_PRIVATE_KEY \
-            --type cyclonedx \
-            --predicate cyclonedx.xml \
+          # cosign attest --key env://COSIGN_PRIVATE_KEY \
+          #   --type cyclonedx \
+          #   --predicate cyclonedx.xml \
+          #   ${{ env.IMAGE_NAME }}@${{ steps.docker_push.outputs.digest }}
+          cosign attach sbom \
+            --sbom cyclonedx.xml \
+            ${{ env.IMAGE_NAME }}@${{ steps.docker_push.outputs.digest }}
+          cosign sign --key env://COSIGN_PRIVATE_KEY \
+            --attachment sbom \
             ${{ env.IMAGE_NAME }}@${{ steps.docker_push.outputs.digest }}
         env:
           COSIGN_PRIVATE_KEY: ${{secrets.COSIGN_PRIVATE_KEY}}

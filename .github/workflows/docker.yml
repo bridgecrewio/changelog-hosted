@@ -22,8 +22,8 @@ jobs:
       - uses: sigstore/cosign-installer@9becc617647dfa20ae7b1151972e9b3a2c338a2b  # v2
       - name: Install xmllint
         run: |
-          sudo apt-get install -y libxml2-utils
-          pip install checkov
+          jq --version
+#          pip install checkov
 
       - name: Log in to the Container registry
         uses: docker/login-action@f4ef78c080cd8ba55a85445d5b36e214a81df20a  # v2
@@ -43,20 +43,20 @@ jobs:
       - name: Generate SBOM
         id: checkov
         continue-on-error: true
-#        uses: bridgecrewio/checkov-action@master
-#        with:
-#          api-key: ${{ secrets.BC_API_KEY }}
-#          docker_image: ${{ env.IMAGE_NAME }}:latest
-#          dockerfile_path: Dockerfile
-#          output_format: cyclonedx
-#          output_file_path: raw.xml,
-        run: |
-          checkov --branch ${{ github.ref_name }} \
-            --repo-id ${{ github.repository }} \
-            --docker-image ${{ env.IMAGE_NAME }}:latest \
-            --dockerfile-path Dockerfile \
-            --output cyclonedx \
-            --output-file-path raw.xml,
+        uses: bridgecrewio/checkov-action@master
+        with:
+          api-key: ${{ secrets.BC_API_KEY }}
+          docker_image: ${{ env.IMAGE_NAME }}:latest
+          dockerfile_path: Dockerfile
+          output_format: cyclonedx_json
+          output_file_path: raw.json,
+#        run: |
+#          checkov --branch ${{ github.ref_name }} \
+#            --repo-id ${{ github.repository }} \
+#            --docker-image ${{ env.IMAGE_NAME }}:latest \
+#            --dockerfile-path Dockerfile \
+#            --output cyclonedx_json \
+#            --output-file-path raw.json,
         env:
           BC_API_KEY: ${{ secrets.BC_API_KEY }}
 
@@ -64,23 +64,15 @@ jobs:
         run: |
           # sign image
           cosign sign -f \
-            -a "repo=${{ github.repository }}" \
-            -a "ref=${{ github.sha }}" \
             ${{ env.IMAGE_NAME }}@${{ steps.docker_push.outputs.digest }}
           
           # format SBOM
-          xmllint --format raw.xml > cyclonedx.xml
+          jq . raw.json > cyclonedx.json
           
           # attest SBOM
-          # cosign attest --key env://COSIGN_PRIVATE_KEY \
-          #   --type cyclonedx \
-          #   --predicate cyclonedx.xml \
-          #   ${{ env.IMAGE_NAME }}@${{ steps.docker_push.outputs.digest }}
-          cosign attach sbom \
-            --sbom cyclonedx.xml \
-            ${{ env.IMAGE_NAME }}@${{ steps.docker_push.outputs.digest }}
-          cosign sign -f \
-            --attachment sbom \
+          cosign attest -f \
+            --type cyclonedx \
+            --predicate cyclonedx.json \
             ${{ env.IMAGE_NAME }}@${{ steps.docker_push.outputs.digest }}
         env:
           COSIGN_PRIVATE_KEY: ${{secrets.COSIGN_PRIVATE_KEY}}

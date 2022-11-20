@@ -12,18 +12,11 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       packages: write
-      id-token: write # Enable OIDC
+      id-token: write  # Enable OIDC
 
     steps:
       - uses: actions/checkout@v3
-      - uses: actions/setup-python@13ae5bb136fac2878aff31522b9efb785519f984  # v4  # can be removed after adding file-path to action
-        with:
-          python-version: "3.8"
       - uses: sigstore/cosign-installer@9becc617647dfa20ae7b1151972e9b3a2c338a2b  # v2
-      - name: Install xmllint
-        run: |
-          jq --version
-#          pip install checkov
 
       - name: Log in to the Container registry
         uses: docker/login-action@f4ef78c080cd8ba55a85445d5b36e214a81df20a  # v2
@@ -49,32 +42,18 @@ jobs:
           docker_image: ${{ env.IMAGE_NAME }}:latest
           dockerfile_path: Dockerfile
           output_format: cyclonedx_json
-          output_file_path: raw.json,
-#        run: |
-#          checkov --branch ${{ github.ref_name }} \
-#            --repo-id ${{ github.repository }} \
-#            --docker-image ${{ env.IMAGE_NAME }}:latest \
-#            --dockerfile-path Dockerfile \
-#            --output cyclonedx_json \
-#            --output-file-path raw.json,
-        env:
-          BC_API_KEY: ${{ secrets.BC_API_KEY }}
+          output_file_path: cyclonedx.json,
 
       - name: Sign image with a key
         run: |
           # sign image
           cosign sign -f \
             ${{ env.IMAGE_NAME }}@${{ steps.docker_push.outputs.digest }}
-          
-          # format SBOM
-          jq . raw.json > cyclonedx.json
-          
+
           # attest SBOM
           cosign attest -f \
             --type cyclonedx \
             --predicate cyclonedx.json \
             ${{ env.IMAGE_NAME }}@${{ steps.docker_push.outputs.digest }}
         env:
-          COSIGN_PRIVATE_KEY: ${{secrets.COSIGN_PRIVATE_KEY}}
-          COSIGN_PASSWORD: ${{secrets.COSIGN_PASSWORD}}
           COSIGN_EXPERIMENTAL: 1

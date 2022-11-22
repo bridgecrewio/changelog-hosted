@@ -27,7 +27,7 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build and export image to Docker
-        id: docker_push
+        id: docker_load
         uses: docker/build-push-action@c56af957549030174b10d6867f20e78cfd7debc5  # v3
         with:
           context: .
@@ -57,12 +57,12 @@ jobs:
         run: |
           # sign image
           cosign sign -f \
-            ${{ env.IMAGE_NAME }}@${{ steps.docker_push.outputs.digest }}
+            ${{ env.IMAGE_NAME }}@${{ steps.docker_load.outputs.digest }}
 
           # attest SBOM
           cosign attest -f \
             --type cyclonedx \
             --predicate cyclonedx.json \
-            ${{ env.IMAGE_NAME }}@${{ steps.docker_push.outputs.digest }}
+            ${{ env.IMAGE_NAME }}@${{ steps.docker_load.outputs.digest }}
         env:
           COSIGN_EXPERIMENTAL: 1

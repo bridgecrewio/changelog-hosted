@@ -9,7 +9,7 @@ env:
 
 jobs:
   build-and-push-image:
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, public, linux, x64]
     permissions:
       packages: write
       id-token: write  # Enable OIDC
@@ -26,7 +26,15 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Build and push Docker image
+      - name: Build and export image to Docker
+        id: docker_push
+        uses: docker/build-push-action@c56af957549030174b10d6867f20e78cfd7debc5  # v3
+        with:
+          context: .
+          load: true
+          tags: ${{ env.IMAGE_NAME }}:latest
+
+      - name: Push Docker image
         id: docker_push
         uses: docker/build-push-action@c56af957549030174b10d6867f20e78cfd7debc5  # v3
         with:

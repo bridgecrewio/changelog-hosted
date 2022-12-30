@@ -3,3 +3,4 @@ cloudformation
 github
 argo
 bitbucket
+azure

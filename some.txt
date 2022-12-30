@@ -3,4 +3,4 @@ cloudformation
 github
 argo
 bitbucket
-test
+azure
